@@ -1,0 +1,60 @@
+Main Activity.kt
+package com.example.prac10
+	
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Button
+import android.widget.TextView
+import kotlin.random.Random
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var handler: Handler
+    private lateinit var runnable: Runnable
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        handler= Handler(Looper.getMainLooper())
+        val numberTextView = findViewById<TextView>(R.id.numberTextView)
+        val generateNumber= findViewById<Button>(R.id.generateButton)
+        generateNumber.setOnClickListener {
+            val thread =Thread{
+                Thread.sleep(3000)
+                val random = Random
+                val number = random.nextInt(1000)
+                handler.post{
+                    numberTextView.text=number.toString()
+                }
+            }
+            thread.start()
+        }
+    }
+}
+
+Main Activity.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/generateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="generateNumber"
+        android:text="Generate Number" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numberTextView"
+        android:text="0"/>
+
+</LinearLayout>
+

@@ -1,0 +1,114 @@
+mainActivity.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/call_button"
+        android:text="Make a call"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/listView"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"/>
+</LinearLayout>
+
+Mainactivity.kt:
+package com.example.prac11b
+
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.provider.ContactsContract
+import android.widget.Button
+import android.widget.ListView
+import android.widget.SimpleCursorAdapter
+import androidx.core.app.ActivityCompat
+
+class MainActivity : AppCompatActivity() {
+    private val REQUEST_READ_CONTACTS=1
+    private val REQUEST_CALL=2
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        if (ActivityCompat.checkSelfPermission(this,android.Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_CONTACTS),REQUEST_READ_CONTACTS)
+        }else{
+            readContacts()
+        }
+        val callButton= findViewById<Button>(R.id.call_button)
+        callButton.setOnClickListener {
+            makePhoneCall("9326002596")
+        }
+    }
+    fun makePhoneCall(phoneNumber: String){
+        if (ActivityCompat.checkSelfPermission(this,android.Manifest.permission.CALL_PHONE)!=PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CALL_PHONE),REQUEST_CALL)
+        }else{
+            val intent= Intent(Intent.ACTION_CALL)
+            intent.data= Uri.parse("tel:$phoneNumber")
+            startActivity(intent)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (requestCode==REQUEST_READ_CONTACTS){
+            if (grantResults.isNotEmpty()&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                readContacts()
+            }
+        }
+        else if (requestCode==REQUEST_CALL){
+            if (grantResults.isNotEmpty()&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                makePhoneCall("9326002596")
+            }
+        }
+    }
+    fun readContacts(){
+        val listView= findViewById<ListView>(R.id.listView)
+        val projection = arrayOf(ContactsContract.Contacts._ID,ContactsContract.Contacts.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone.NUMBER)
+        val cursor : Cursor?=contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,projection,
+            null,null,null)
+        val adapter=SimpleCursorAdapter(this,android.R.layout.simple_list_item_2,cursor, arrayOf(ContactsContract.Contacts.DISPLAY_NAME,
+        ContactsContract.CommonDataKinds.Phone.NUMBER), intArrayOf(android.R.id.text1,android.R.id.text2),0)
+        listView.adapter=adapter
+    }
+}
+
+androidManifest.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Prac11b"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+

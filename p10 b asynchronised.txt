@@ -1,0 +1,88 @@
+Main Activity.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:id="@+id/image_view"
+        />
+
+</LinearLayout>
+
+Main Activity.kt
+
+package com.example.prac10b
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import android.widget.ImageView
+import java.net.URL
+class MainActivity : AppCompatActivity() {
+    private lateinit var imageView: ImageView
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        imageView =findViewById(R.id.image_view)
+        DownloadImageTask().execute("https://scx2.b-cdn.net/gfx/news/hires/2015/whatsimporta.jpg")
+    }
+    inner class DownloadImageTask:AsyncTask<String, Void, Bitmap>(){
+        override fun doInBackground(vararg urls: String?): Bitmap? {
+            val url= urls[0]
+            var bitmap: Bitmap?=null
+            try {
+                val inputStream=URL(url).openStream()
+                bitmap=BitmapFactory.decodeStream(inputStream)
+            }catch (e: Exception){
+                Log.e("Error",e.message?:"Unknown error")
+                e.printStackTrace()
+            }
+            return bitmap
+        }
+        override fun onPostExecute(result: Bitmap?) {
+            if (result!=null){
+                imageView.setImageBitmap(result)
+            }
+        }
+    }
+}
+Manifest.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Prac10b"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+

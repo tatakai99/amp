@@ -1,0 +1,33 @@
+mainActivity.xml
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/resauto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".MainActivity2">
+<ListView android:layout_width="match_parent" 
+android:layout_height="match_parent" 
+android:id="@+id/list" 
+app:layout_constraintBottom_toTopOf="parent" 
+app:layout_constraintEnd_toEndOf="parent" 
+app:layout_constraintStart_toStartOf="parent" 
+app:layout_constraintTop_toTopOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+activityMain.kt
+
+package com.example.myapplication
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.ListView
+
+class MainActivity2 : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main2)
+
+        val list=findViewById<ListView>(R.id.list)
+
+        var items= arrayOf("One","Two","Three","Four","Five")
+        var arrayAdapter=ArrayAdapter(this,R.layout.list_row,R.id.item_text,items)
+        list.adapter=arrayAdapter
+    }
+}
+

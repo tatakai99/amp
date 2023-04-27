@@ -1,0 +1,230 @@
+LinearLayout
+xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/qwerty"
+        android:text="Click Me"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/turf"
+        android:text="Kick Me"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/qwerty1"
+            android:text="Click Me 2"
+            android:layout_marginRight="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/turf1"
+            android:text="Kick Me 2"/>
+    </LinearLayout>
+</LinearLayout>
+
+Kt
+package com.example.mylinearlayout
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val button1 = findViewById<Button>(R.id.qwerty)
+        val button2 = findViewById<Button>(R.id.turf)
+        val button3 = findViewById<Button>(R.id.qwerty1)
+        val button4 = findViewById<Button>(R.id.turf1)
+
+        button1.setOnClickListener { Toast.makeText(this@MainActivity, "You Clicked Me" , Toast.LENGTH_SHORT).show() }
+        button2.setOnClickListener { Toast.makeText(this@MainActivity, "You Kicked Me" , Toast.LENGTH_SHORT).show() }
+        button3.setOnClickListener { Toast.makeText(this@MainActivity, "You clicked me again" ,
+            Toast.LENGTH_SHORT).show() }
+        button4.setOnClickListener { Toast.makeText(this@MainActivity, "You kicked me again" ,
+            Toast.LENGTH_SHORT).show() }
+
+    }
+}
+
+
+RelativeLayout
+Xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/qwerty"
+        android:text="Click Me"
+        android:layout_alignParentLeft="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/turf"
+        android:text="Kick me"
+        android:layout_alignParentRight="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/qwerty1"
+        android:text="Click Me 1"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/turf1"
+        android:text="Click Me 2"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
+
+Kt
+package com.example.myrelativelayout
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val button1 = findViewById<Button>(R.id.qwerty)
+        val button2 = findViewById<Button>(R.id.turf)
+        val button3 = findViewById<Button>(R.id.qwerty1)
+        val button4 = findViewById<Button>(R.id.turf1)
+        button1.setOnClickListener {
+            Toast.makeText(this@MainActivity, "You clicked me", Toast.LENGTH_SHORT).show() }
+        button2.setOnClickListener {
+            Toast.makeText(this@MainActivity, "You kicked me", Toast.LENGTH_SHORT).show() }
+        button3.setOnClickListener {
+            Toast.makeText(this@MainActivity, "You clicked me again", Toast.LENGTH_SHORT).show() }
+        button4.setOnClickListener {
+            Toast.makeText(this@MainActivity, "You kicked me again", Toast.LENGTH_SHORT).show() }
+    }
+}
+
+GridLayout
+Xml
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:rowCount="3"
+    android:columnCount="2"
+    android:layout_marginTop="20dp"
+    android:layout_marginLeft="20dp"
+    tools:context=".MainActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/qwerty"
+        android:text="CLICK ME"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/asdf"
+        android:text="KICK ME"
+        android:layout_marginRight="10dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/kiol"
+        android:text="SMILE"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/zxcv"
+        android:text="CLICK ME 2"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mnop"
+        android:text="KICK ME 2"
+        android:layout_marginRight="10dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buit"
+        android:text="SMILE 2"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"/>
+
+</GridLayout>
+
+Kt
+package com.example.mygridlayout
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val btn=findViewById<Button>(R.id.qwerty)
+        val btn2=findViewById<Button>(R.id.asdf)
+        val btn3=findViewById<Button>(R.id.zxcv)
+        val btn4=findViewById<Button>(R.id.mnop)
+        val btn5=findViewById<Button>(R.id.kiol)
+        val btn6=findViewById<Button>(R.id.buit)
+
+        btn.setOnClickListener{
+            Toast.makeText( this@MainActivity,"you clicked me",Toast.LENGTH_SHORT).show() }
+        btn2.setOnClickListener{
+            Toast.makeText( this@MainActivity,"you kicked me",Toast.LENGTH_SHORT).show() }
+        btn3.setOnClickListener{
+            Toast.makeText( this@MainActivity,"you clicked me again",Toast.LENGTH_SHORT).show() }
+        btn4.setOnClickListener{
+            Toast.makeText( this@MainActivity,"you kicked me again",Toast.LENGTH_SHORT).show() }
+        btn5.setOnClickListener{
+            Toast.makeText( this@MainActivity,"you smiled me",Toast.LENGTH_SHORT).show() }
+        btn6.setOnClickListener{
+            Toast.makeText( this@MainActivity,"you smiled me again",Toast.LENGTH_SHORT).show() }
+    }
+}
+

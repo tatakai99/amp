@@ -1,0 +1,170 @@
+activityMain.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/menu"
+        app:title="Menu"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/btn1"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:text="@string/click_me"
+        android:textSize="30sp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+mainActivity.kt
+package com.example.pract6
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.PersistableBundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.toolbar)) }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean { menuInflater.inflate(R.menu.mainmenu,menu)
+        return super.onCreateOptionsMenu(menu) }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.getItem(2)?.isEnabled = false
+        menu?.getItem(4)?.isVisible=false
+        return super.onPrepareOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean { return when(item.itemId){
+            R.id.notificationmenu->{
+                Toast.makeText(this@MainActivity,"Notification",Toast.LENGTH_SHORT).show()
+                return true }
+            R.id.adding->{ Toast.makeText(this@MainActivity,"Add",Toast.LENGTH_SHORT).show()
+                return true }
+            R.id.like->{ Toast.makeText(this@MainActivity,"Like",Toast.LENGTH_SHORT).show()
+                return true }
+            R.id.share->{ Toast.makeText(this@MainActivity,"Subscribe",Toast.LENGTH_SHORT).show()
+                return true }
+            R.id.about->{ Toast.makeText(this@MainActivity,"Made With Love",Toast.LENGTH_SHORT).show()
+                return true }
+            else->super.onOptionsItemSelected(item) }
+    }
+    override fun onBackPressed() {
+        val builder=AlertDialog.Builder(this)
+        builder.setTitle("Are you sure")
+        builder.setMessage("Are you sure you want to exit the app ?")
+        builder.setPositiveButton("Yes",{dialogInterface,i->finish()})
+        builder.setNegativeButton("No",{dialogInterface,i->})
+        builder.show()
+    }
+}
+
+mainmenu.xml
+
+package com.example.pract6
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.PersistableBundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.toolbar)) }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean { menuInflater.inflate(R.menu.mainmenu,menu)
+        return super.onCreateOptionsMenu(menu) }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.getItem(2)?.isEnabled = false
+        menu?.getItem(4)?.isVisible=false
+        return super.onPrepareOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean { return when(item.itemId){
+            R.id.notificationmenu->{
+                Toast.makeText(this@MainActivity,"Notification",Toast.LENGTH_SHORT).show()
+                return true }
+            R.id.adding->{ Toast.makeText(this@MainActivity,"Add",Toast.LENGTH_SHORT).show()
+                return true }
+            R.id.like->{ Toast.makeText(this@MainActivity,"Like",Toast.LENGTH_SHORT).show()
+                return true }
+            R.id.share->{ Toast.makeText(this@MainActivity,"Subscribe",Toast.LENGTH_SHORT).show()
+                return true }
+            R.id.about->{ Toast.makeText(this@MainActivity,"Made With Love",Toast.LENGTH_SHORT).show()
+                return true }
+            else->super.onOptionsItemSelected(item) }
+    }
+    override fun onBackPressed() {
+        val builder=AlertDialog.Builder(this)
+        builder.setTitle("Are you sure")
+        builder.setMessage("Are you sure you want to exit the app ?")
+        builder.setPositiveButton("Yes",{dialogInterface,i->finish()})
+        builder.setNegativeButton("No",{dialogInterface,i->})
+        builder.show()
+    }
+}
+
+AndroidManifest.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+    </application>
+
+</manifest>
+
